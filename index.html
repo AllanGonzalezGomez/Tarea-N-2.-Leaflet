@@ -30,7 +30,34 @@
         attribution: '<a href="http://www.openstreetmap.org/">OpenStreetMap</a>'
       });
       osm.addTo(mapa);
-	    
+	  
+      var Esri_WorldTopoMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+      });
+      
+      
+	  var Esri_WorldShadedRelief = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}', {
+	          attribution: 'Tiles &copy; Esri &mdash; Source: Esri',
+	          maxZoom: 13
+      });
+		
+      var stm = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}.{ext}',{
+	          attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	          subdomains: 'abcd',
+	          minZoom: 0,
+	          maxZoom: 18,
+	          ext: 'png'	  
+	    });
+		
+		var wms1Layer = L.tileLayer.wms('http://geos.snitcr.go.cr/be/IGN_50/wms?',{
+			  layers:'IGN_50:limiteprovincial_50k'}).addTo(mapa);
+		
+		var wms2Layer = L.tileLayer.wms('http://geos.snitcr.go.cr/be/IGN_50/wms?',{
+			  layer:'IGN_50:limitedistrital_50k'}).addTo(mapa);
+			  
+		var wms3Layer = L.tileLayer.wms('http://geos.snitcr.go.cr/be/IGN_50/wms?',{
+		      layer:'zona_castastrada'}).addTo(mapa);
+		
       // retorna un color con base en la cantidad de especies
       function color(d) {
 	return d > 207082 ? '#67000d' :
@@ -66,13 +93,22 @@
       })
       cantonesAllan.addTo(mapa);
 	    
-	    
    	    
       var baseLayers = {
-	"OpenStreetMap": osm
-      };
+	"OpenStreetMap": osm,
+    "Esri_WorldTopoMap": Esri.WorldTopoMap,
+	"Esri.WorldShadedRelief": Esri.WorldShadedRelief,
+	"Stamen.TerrainBackground": stm
+	
+	  };
+	 
+	  
       var overlays = {
+	"Provincias": wms1Layer,
 	"Cantones de Costa Rica": cantonesAllan
+	"Distritos":wms2Layer,
+	"Catastrado válido":wms3Layer
+	
       };
       L.control.layers(baseLayers, overlays).addTo(mapa);
 	    
@@ -81,5 +117,4 @@
     </script>
   </body>
 </html>
-  
  
