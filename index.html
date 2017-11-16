@@ -89,27 +89,26 @@
           };
         },
 	      
-	onEachFeature: pobTotal //+ onEachFeature: nombrecanton
+	onEachFeature: pobTotal
       })
       cantonesAllan.addTo(mapa);
 	    
    	    
       var baseLayers = {
 	"OpenStreetMap": osm,
-    "Esri_WorldTopoMap": Esri.WorldTopoMap,
-	"Esri.WorldShadedRelief": Esri.WorldShadedRelief,
+    "Esri_WorldTopoMap": Esri_WorldTopoMap,
+	"Esri.WorldShadedRelief": Esri_WorldShadedRelief,
 	"Stamen.TerrainBackground": stm
-	
 	  };
 	 
 	  
       var overlays = {
 	"Provincias": wms1Layer,
-	"Cantones de Costa Rica": cantonesAllan
+	"Cantones de Costa Rica": cantonesAllan,
 	"Distritos":wms2Layer,
 	"Catastrado válido":wms3Layer
-	
       };
+	  
       L.control.layers(baseLayers, overlays).addTo(mapa);
 	    
       L.control.mousePosition().addTo(mapa);
@@ -117,4 +116,3 @@
     </script>
   </body>
 </html>
- 
